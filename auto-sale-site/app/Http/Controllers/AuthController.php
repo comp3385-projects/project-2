@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Favourite;
+use App\Models\User;
+use Illuminate\Validation\Rules\File;
+
 
 class AuthController extends Controller
 {
@@ -64,8 +68,8 @@ function getdetails($user_id){
 }
 
 function getfavorites($user_id){
-    $favorite = Favorite::where($user_id);
-
+    $favorite = Favourite::where($user_id)
+                ->get();
     return response()->json([
         'favorite'=>$favorite
     ]);

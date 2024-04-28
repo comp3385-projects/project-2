@@ -32,8 +32,8 @@ class CarController extends Controller
     function search($search){
 
    
-        $cars = Car::where('make',$search);
-
+        $cars = Car::where('make',$search)
+        ->get();
         return response()->json([
             'cars'=>$cars
         ]);
