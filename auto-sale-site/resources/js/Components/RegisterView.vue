@@ -1,12 +1,12 @@
 <template>
     <div class="container">
         <h1 class="font-weight-light">Register a new account</h1>
-        <form class="" @submit.prevent="handleFormSubmission">
+        <form id="Form" @submit.prevent="Registration">
             <div class="row">
                 <div class="form-group col">
-                    <label class="col-sm-2 col-form-label" for="username">Username</label>
+                    <label class="col-sm-2 col-form-label" for="email">Email</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="username" v-model="username" required>
+                        <input type="email" class="form-control" id="email" v-model="email" required>
                     </div>
                 </div>
                 <div class="form-group col">
@@ -16,19 +16,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col">
-                    <label class="col-sm-2 col-form-label" for="fullName">Full Name</label>
+            <div class="form-group">
+                    <label class="col-sm-2 col-form-label" for="name">Full Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="fullName" v-model="fullName" required>
+                        <input type="text" class="form-control" id="name" v-model="name" required>
                     </div>
-                </div>
-                <div class="form-group col">
-                    <label class="col-sm-2 col-form-label" for="email">Email</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" v-model="email" required>
-                    </div>
-                </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 col-form-label" for="location">Location</label>
@@ -37,16 +29,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-form-label" for="description">Description</label>
+                <label class="col-sm-2 col-form-label" for="biography">Description</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="description" v-model="description" required></textarea>
+                    <textarea class="form-control" id="biography" v-model="biography" required></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 col-form-label" for="profilePhoto">Profile Photo</label>
+                <label class="col-sm-2 col-form-label" for="photo">Profile Photo</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control-file form-control" id="profilePhoto"
-                        @change="setProfilePhoto">
+                    <input type="file" class="form-control-file form-control" id="photo" accept="image/*">
                 </div>
             </div>
             <div class="form-group">
@@ -58,12 +49,28 @@
     </div>
 </template>
 
-<script>
-export default {
-    methods: {
-        handleFormSubmission() {
-            // TODO: Handle form submission
-        }
-    }
+<script setup>
+
+function Registration(){
+let Form = document.getElementById('Form');
+let form_data = new FormData(Form);
+
+fetch("/api/v1/auth/register", {
+ method: 'POST',
+ body: form_data,
+ headers: {
+     'Accept': 'application/json'
+ 
+ }
+})
+.then(function (response) {
+ return response.json();
+})
+.then(function (data) {
+ console.log(data);
+})
+.catch(function (error){ 
+console.log(error);
+});
 }
 </script>
