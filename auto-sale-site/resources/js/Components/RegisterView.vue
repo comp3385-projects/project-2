@@ -59,6 +59,7 @@ fetch("/api/v1/auth/register", {
  method: 'POST',
  body: form_data,
  headers: {
+    'Authorization': `Bearer your-jwt-access-token`,
      'Accept': 'application/json'
  
  }

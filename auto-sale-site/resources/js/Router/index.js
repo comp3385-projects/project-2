@@ -19,13 +19,19 @@ const router = createRouter({
         {
             path: '/register',
             name: 'register',
-            component: () => import('../Pages/RegisterView.vue'),
+            component: () => import('../Components/RegisterView.vue'),
             meta: { layout: PublicLayout, }
         },
         {
             path: '/login',
             name: 'login',
-            component: () => import('../Pages/LoginView.vue'),
+            component: () => import('../Components/LoginView.vue'),
+            meta: { layout: PublicLayout, }
+        },
+        {
+            path: '/cars/new',
+            name: 'new',
+            component: () => import('../Components/CarForm.vue'),
             meta: { layout: PublicLayout, }
         },
     ]
