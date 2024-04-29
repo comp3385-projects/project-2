@@ -21,9 +21,9 @@ class CarController extends Controller
             'cars'=>$cars
         ]);
     }
-    function pinpoint($cars_id){
+    function pinpoint($car_id){
 
-        $car = Car::find($cars_id);
+        $car = Car::find($car_id);
 
         return response()->json([
             'car'=>$car
@@ -50,7 +50,7 @@ class CarController extends Controller
             'car_type'=> 'required',
             'price'=> 'required',
             'photo' =>['required',File::types(['png','jpg','webp'])->min(180)->max(1080)],
-            'user_id'=> 'required'        ]);
+               ]);
        
    
         $base = new Car();
@@ -63,7 +63,7 @@ class CarController extends Controller
         $base->car_type= $request ->input('car_type');
         $base->price= $request ->input('price');
         $base->photo= $request ->photo-> storeAs('images',$request->photo->getClientOriginalName());
-        $base->user_id= $request ->input('user_id');
+        $base->user_id= auth()->user();
         $base->save();
         return response()->json([
             'message'=>"Car has been created sucessfully",
@@ -71,14 +71,11 @@ class CarController extends Controller
         ],201);
     }
     
-    function setFav(Request $request ){
-        $request->validate([
-          'car_id'=> 'required',
-          'user_id'=> 'required'        ]);
+    function setFav($car_id){
  
       $base = new Favourite();
-      $base->car_id= $request ->input('car_id');
-      $base->user_id= $request ->input('user_id');
+      $base->car_id= $car_id;
+      $base->user_id= auth()->user();
       $base->save();
       return response()->json([
           'message'=>"Favorite Car has been set",
